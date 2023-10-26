@@ -5,26 +5,25 @@ const insertContent = `INSERT INTO posts (title, content) VALUES
 ('Functional Programming', 'Functional programming is a paradigm where functions take center stage...'),
 ('Asynchronous Programming in JS', 'Asynchronous programming allows operations to run in parallel without blocking the main thread...')
 `;
-
-
-
+req.log.info("Inserted content into the database.");
 
 const selectContend = `SELECT * FROM posts`;
-
-
-
+req.log.info("Selected content from the database.");
 
 const initializeDatabase = () => {
   const db = new sqlite3.Database("./my-database.db");
+  req.log.info("Initialized the database.");
   return db;
 };
-
-
 
 const insertDB = (db, query) => {
   return new Promise((resolve, reject) => {
     db.run(query, [], (err, rows) => {
-      if (err) return reject(err);
+      if (err) {
+        req.log.error("Failed to insert data into the database.");
+        return reject(err);
+      }
+      req.log.info("Data inserted into the database.");
       resolve(rows);
     });
   });
@@ -33,7 +32,11 @@ const insertDB = (db, query) => {
 const queryDB = (db, query) => {
   return new Promise((resolve, reject) => {
     db.all(query, [], (err, rows) => {
-      if (err) return reject(err);
+      if (err) {
+        req.log.error("Failed to query data from the database.");
+        return reject(err);
+      }
+      req.log.info("Data queried from the database.");
       resolve(rows);
     });
   });
