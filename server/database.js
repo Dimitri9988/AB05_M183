@@ -5,7 +5,7 @@ const insertContent = `INSERT INTO posts (title, content) VALUES
 ('Functional Programming', 'Functional programming is a paradigm where functions take center stage...'),
 ('Asynchronous Programming in JS', 'Asynchronous programming allows operations to run in parallel without blocking the main thread...')
 `;
-req.log.info("Inserted content into the database.");
+
 
 const selectContend = `SELECT * FROM posts`;
 req.log.info("Selected content from the database.");
